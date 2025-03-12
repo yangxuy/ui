@@ -1,0 +1,42 @@
+@use "sass:map";
+
+@use "map" as *;
+@use "mixins" as *;
+
+$name: message;
+
+@include b($name) {
+  width: fit-content;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  padding: getCssVar("padding-small");
+  border-radius: getCssVar("border-radius", "base");
+  transform: translateX(-50%);
+  color: getCssVar("message-text-color");
+  background-color: getCssVar("message-background-color");
+
+  @each $type in $types {
+    @include m($type) {
+      @include set-css-var-value(
+        getCssName($name, "text-color"),
+        map.get($colors, $type, "base")
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "background-color"),
+        getCssVar("color", $type, "light-5")
+      );
+    }
+  }
+}
+
+.#{$namespace}-message-fade-enter-active,
+.#{$namespace}-message-fade-leave-active {
+  transition: opacity getCssVar(transition-duration);
+}
+
+.#{$namespace}-message-fade-enter-from,
+.#{$namespace}-message-fade-leave-to {
+  opacity: 0;
+}

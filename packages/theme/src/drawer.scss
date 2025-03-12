@@ -1,0 +1,84 @@
+@use "mixins" as *;
+
+$name: drawer;
+
+@include b($name) {
+  position: absolute;
+  height: 100%;
+  background-color: #fff;
+  transition: all getCssVar(transition-duration);
+  padding: getCssVar("padding", "base");
+  color: getCssVar("light-text-color", "title");
+
+  @each $direction in (rtl, ltr, ttb, btt) {
+    @include m($direction) {
+      @if ($direction== ltr) {
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+      @if ($direction==rtl) {
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+      @if ($direction==ttb) {
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+      }
+      @if ($direction==btt) {
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+
+  @include m(header) {
+    display: flex;
+    align-items: center;
+  }
+
+  @include m(header-title) {
+    flex: 1;
+    line-height: inherit;
+    font-size: 16px;
+  }
+
+  @include m(header-close) {
+    align-self: flex-end;
+  }
+}
+
+$animation: ss-drawer-fade;
+
+.#{$animation}-enter-active,
+.#{$animation}-leave-active {
+  transition: all getCssVar(transition-duration);
+}
+
+.#{$animation}-enter-from,
+.#{$animation}-leave-to {
+  opacity: 0;
+
+  .ss-drawer--rtl {
+    transform: translateX(100%);
+  }
+
+  .ss-drawer--ltr {
+    transform: translateX(-100%);
+  }
+
+  .ss-drawer--ttb {
+    transform: translateY(-100%);
+  }
+
+  .ss-drawer--btt {
+    transform: translateY(100%);
+  }
+}

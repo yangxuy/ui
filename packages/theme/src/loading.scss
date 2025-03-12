@@ -1,0 +1,61 @@
+@use "sass:map";
+
+@use "map" as *;
+@use "mixins" as *;
+
+$name: loading;
+
+@include b($name) {
+  @include set-component-css-var($name, $loading);
+}
+
+@include b($name) {
+  .circular {
+    display: inline;
+    height: getCssVar("loading-spinner-size");
+    width: getCssVar("loading-spinner-size");
+    overflow: hidden;
+    animation: loading-rotate 2s linear infinite;
+  }
+
+  .path {
+    animation: loading-dash 1.5s ease-in-out infinite;
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: 0;
+    stroke-width: 2;
+    stroke: getCssVar("color-primary");
+    stroke-linecap: round;
+    transform-origin: 0px 0px;
+  }
+
+  @include m("mask") {
+    position: absolute;
+    inset: 0;
+    background-color: getCssVar("mask-color");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+@keyframes loading-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
+  }
+}

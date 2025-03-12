@@ -1,0 +1,51 @@
+@use "map" as *;
+@use "mixins" as *;
+
+:root {
+  @include set-css-var-value("color-white", $light);
+  @include set-css-var-value("color-black", $dark);
+
+  @include set-component-css-var("transition-duration", $transition-duration);
+  @include set-component-css-var("text-color", $text-color);
+  @include set-component-css-var("light-text-color", $light-text-color);
+  @include set-component-css-var("font-size", $font-size);
+  @include set-component-css-var("border-color", $border-color);
+  @include set-component-css-var("border-radius", $border-radius);
+  @include set-component-css-var("bg-color", $bg-color);
+  @include set-component-css-var("padding", $padding-hv);
+  @include set-component-css-var("mask-color", $mask-color);
+  @include set-component-css-var("fill-color", $fill-color);
+
+  // Border
+  @include set-css-var-value("border-width", $border-width);
+  @include set-css-var-value("border-style", $border-style);
+  @include set-css-var-value(
+    "border",
+    getCssVar("border-width") getCssVar("border-style")
+      getCssVar("border-color")
+  );
+
+  // get rgb
+  @each $type in $types {
+    @include set-css-color-type($colors, $type);
+  }
+}
+
+// fade animation
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity getCssVar(transition-duration);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.is-disabled {
+  cursor: not-allowed;
+}
+
+input:disabled {
+  cursor: not-allowed;
+}

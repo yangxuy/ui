@@ -1,0 +1,63 @@
+@use "sass:map";
+@use "mixins" as *;
+
+$name: input;
+
+$input: () !default;
+$input: map.merge(
+  (
+    "border-color": getCssVar("border-color", "dark"),
+  ),
+  $input
+);
+
+@include b($name) {
+  @include set-component-css-var("input", $input);
+}
+
+@include b($name) {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  vertical-align: middle;
+  box-shadow: 0 0 0 1px getCssVar($name, "border-color");
+  padding: 0 12px;
+  border-radius: getCssVar("border-radius", "base");
+  width: 240px;
+
+  @include m(inner) {
+    padding: 0;
+    outline: none;
+    border: none;
+    background: none;
+    height: 32px;
+    flex: 1;
+    font-size: getCssVar(font-size, base);
+
+    &::placeholder {
+      color: getCssVar("text-color", "placeholder");
+      font-size: getCssVar(font-size, base);
+    }
+  }
+
+  &:focus-within {
+    @include set-css-var-value(
+      ($name, "border-color"),
+      getCssVar(border-color, "primary")
+    );
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+    background-color: getCssVar("fill-color", "light");
+    & > * {
+      cursor: not-allowed;
+    }
+  }
+
+  @include m(icon) {
+    height: 1em;
+    width: 1em;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "yx-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+   "example":"pnpm run -C example dev",
+   "docs":"pnpm run -C docs docs:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*",
+    "docs"
+  ],
+  "dependencies": {
+    "@yx-ui/components": "workspace:^",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vue": "^3.5.13"
+  }
+}

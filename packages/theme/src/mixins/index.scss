@@ -1,0 +1,141 @@
+@use "sass:map";
+@use "sass:color";
+
+$namespace: "ss" !default;
+$common-separator: "-" !default;
+$element-separator: "__" !default;
+$modifier-separator: "--" !default;
+$state-prefix: "is-" !default;
+
+$B: null;
+$E: null;
+// BEM
+@mixin b($block) {
+  $B: $namespace + $common-separator + $block !global;
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin e($element) {
+  $E: $element !global;
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $element {
+    $currentSelector: #{$currentSelector +
+      "." +
+      $B +
+      $element-separator +
+      $unit +
+      ","};
+  }
+
+  @if hitAllSpecialNestRule($selector) {
+    @at-root {
+      #{$selector} {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$currentSelector} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin m($modifier) {
+  $selector: &;
+  @at-root {
+    #{$selector + $modifier-separator + $modifier} {
+      @content;
+    }
+  }
+}
+
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+@mixin center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@function joinVarName($list) {
+  $name: "--" + $namespace;
+  @each $item in $list {
+    @if $item != "" {
+      $name: $name + "-" + $item;
+    }
+  }
+  @return $name;
+}
+
+@mixin set-css-var-value($name, $value) {
+  #{joinVarName($name)}: #{$value};
+}
+
+// 获取css
+@function getCssVar($args...) {
+  @return var(#{joinVarName($args)});
+}
+
+// 获取css name
+@function getCssName($list...) {
+  $name: "" !default;
+  @each $item in $list {
+    @if $name != "" {
+      $name: $name + "-" + $item;
+    } @else {
+      $name: $item;
+    }
+  }
+  @return $name;
+}
+
+// 获取css变量名称
+@function getCssVarName($args...) {
+  @return joinVarName($args);
+}
+
+// 设置组件css变量
+@mixin set-component-css-var($name, $variables) {
+  @each $attribute, $value in $variables {
+    @if $attribute == "default" {
+      #{getCssVarName($name)}: #{$value};
+    } @else {
+      #{getCssVarName($name, $attribute)}: #{$value};
+    }
+  }
+}
+
+@mixin set-css-color-type($colors, $type) {
+  @include set-css-var-value(("color", $type), map.get($colors, $type, "base"));
+
+  @each $i in (3, 5, 7, 8, 9) {
+    @include set-css-var-value(
+      ("color", $type, "light", $i),
+      map.get($colors, $type, "light-#{$i}")
+    );
+  }
+
+  @include set-css-var-value(
+    ("color", $type, "dark-2"),
+    map.get($colors, $type, "dark-2")
+  );
+}
+
+@mixin css-var-from-global($var, $gVar) {
+  $varName: joinVarName($var);
+  $gVarName: joinVarName($gVar);
+  #{$varName}: var(#{$gVarName});
+}

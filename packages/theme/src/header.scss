@@ -1,0 +1,20 @@
+@use "sass:map";
+@use "mixins" as *;
+
+$header: () !default;
+$header: map.merge(
+  (
+    "padding": 0 20px,
+    "height": 60px,
+  ),
+  $header
+);
+
+@include b(header) {
+  @include set-component-css-var("header", $header);
+
+  padding: getCssVar("header-padding");
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: getCssVar("header-height");
+}

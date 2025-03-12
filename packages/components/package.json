@@ -1,0 +1,23 @@
+{
+  "name": "@yx-ui/components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "^3.5.13"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@floating-ui/vue": "^1.1.6",
+    "@vueuse/core": "^12.7.0",
+    "@yx-ui/hooks": "workspace:^",
+    "@yx-ui/theme": "workspace:^",
+    "async-validator": "^4.2.5"
+  }
+}

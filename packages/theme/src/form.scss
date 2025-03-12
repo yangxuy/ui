@@ -1,0 +1,6 @@
+@use "mixins" as *;
+
+$name: "form";
+
+@include b($name) {
+}

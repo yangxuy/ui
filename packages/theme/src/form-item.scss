@@ -1,0 +1,46 @@
+@use "mixins" as *;
+
+$name: form-item;
+
+@include b($name) {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-bottom: 18px;
+
+  @include m(label-left) {
+    justify-content: flex-start;
+  }
+
+  @include m(label-top) {
+    display: block;
+  }
+
+  @include m(content) {
+    position: relative;
+  }
+
+  @include m(error) {
+    color: getCssVar("color", "error");
+    position: absolute;
+    bottom: 0;
+    top: 100%;
+    font-size: 12px;
+  }
+
+  .ss-form-item--label {
+    font-size: getCssVar(font-size, base);
+    color: getCssVar(light-text-color, regular);
+  }
+
+  @include when(required) {
+    .ss-form-item--label {
+      display: flex;
+      &::after {
+        content: "*";
+        color: getCssVar(color, danger);
+        margin-left: 4px;
+      }
+    }
+  }
+}

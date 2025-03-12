@@ -1,0 +1,54 @@
+@use "sass:map";
+
+@use "map" as *;
+@use "mixins" as *;
+
+$name: notification;
+
+@include b($name) {
+  width: 330px;
+  padding: 14px 26px 14px 13px;
+  position: fixed;
+  transform: translate(0, 0);
+  transition: all getCssVar(transition-duration);
+  border-radius: getCssVar("border-radius", "base");
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+
+  @include m("header") {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: bold;
+  }
+
+  @include m("message") {
+    margin: 6px 0 0;
+    color: getCssVar("light-text-color", "second");
+  }
+
+  @each $type in (primary, success, info, warning, error) {
+    @include m($type) {
+      color: map.get($colors, $type, "base");
+    }
+  }
+}
+
+$animationName: ss-notification-fade;
+
+.#{$animationName}-enter-active,
+.#{$animationName}-leave-active {
+  transition: all getCssVar(transition-duration);
+}
+
+.#{$animationName}-enter-from,
+.#{$animationName}-leave-to {
+  opacity: 0;
+  &.right {
+    transform: translateX(100%);
+  }
+  &.left {
+    transform: translateX(-100%);
+  }
+}

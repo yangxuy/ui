@@ -1,0 +1,107 @@
+@use "sass:map";
+@use "mixins" as *;
+
+$name: select;
+
+$select: () !default;
+$select: map.merge(
+  (
+    "border-color": getCssVar("border-color", "dark"),
+  ),
+  $select
+);
+
+@include b($name) {
+  @include set-component-css-var($name, $select);
+}
+
+@include b($name) {
+  width: 240px;
+  box-shadow: 0 0 0 1px getCssVar($name, "border-color");
+  padding: 0 12px;
+  border-radius: getCssVar("border-radius", "base");
+  display: flex;
+  align-items: center;
+
+  @include m(input) {
+    padding: 0;
+    outline: none;
+    border: none;
+    background: none;
+    appearance: none;
+    cursor: pointer;
+    height: 32px;
+    flex-grow: 1;
+  }
+
+  @include when(disabled) {
+    background-color: getCssVar(fill-color, light);
+  }
+
+  @include m(icon) {
+    width: 1em;
+    height: 1em;
+    transform: rotate(0);
+    cursor: pointer;
+    transition: all getCssVar(transition-duration);
+
+    @include when(reverse) {
+      transform: rotate(180deg);
+    }
+  }
+
+  @include m(content) {
+    border: getCssVar(border);
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: getCssVar(border-radius, base);
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+  }
+
+  @include m(tag) {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  @include m(tag-item) {
+    background-color: getCssVar(color-info-light-9);
+    padding: 0 8px;
+    border-radius: 4px;
+  }
+
+  &:not(.is-disabled):focus-within {
+    @include set-css-var-value(
+      ($name, "border-color"),
+      getCssVar(border-color, "primary")
+    );
+  }
+}
+
+@include b(select-option) {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 12px;
+  margin: 0 !important;
+  cursor: pointer;
+  &:hover {
+    background-color: getCssVar(fill-color, light);
+  }
+
+  @include when(select) {
+    background-color: getCssVar(fill-color, light);
+    color: getCssVar(text-color, primary);
+  }
+
+  @include when(disabled) {
+    background-color: transparent;
+    color: getCssVar(text-color, disabled);
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@yx-ui/docs",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@vitepress-demo-preview/component": "^2.3.2",
+    "@vitepress-demo-preview/plugin": "^1.2.3",
+    "@yx-ui/components": "workspace:^",
+    "vitepress": "^1.6.3"
+  }
+}

@@ -1,0 +1,21 @@
+@use "sass:map";
+@use "mixins" as *;
+
+// footer
+$footer: () !default;
+$footer: map.merge(
+  (
+    "padding": 0 20px,
+    "height": 60px,
+  ),
+  $footer
+);
+
+@include b(footer) {
+  @include set-component-css-var("footer", $footer);
+
+  padding: getCssVar("footer-padding");
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: getCssVar("footer-height");
+}

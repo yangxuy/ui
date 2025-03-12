@@ -1,0 +1,20 @@
+@use "mixins" as *;
+
+$name: space;
+
+@include b($name) {
+  display: flex;
+
+  @include e(item) {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+}

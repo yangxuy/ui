@@ -1,0 +1,68 @@
+@use "mixins" as *;
+
+$name: dialog;
+
+@include b($name) {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+
+@include b("dialog-content") {
+  width: var(--dialog-width);
+  margin: var(--dialog-top, 15vh) auto;
+  background-color: #fff;
+  padding: 24px;
+  position: relative;
+  height: fit-content;
+  border-radius: getCssVar("border-radius", "base");
+
+  @include when("dialog-center") {
+    margin: auto;
+  }
+
+  @include m("close") {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    cursor: pointer;
+  }
+
+  @include m("footer-btn") {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 12px;
+    & > :last-child {
+      margin-left: 10px;
+    }
+  }
+
+  @include m("title") {
+    padding-bottom: 12px;
+  }
+
+  @include m("footer") {
+    padding-top: 12px;
+  }
+
+  @include when("fullscreen") {
+    height: 100%;
+    margin: 0;
+  }
+}
+
+$animation: ss-dialog-fade;
+
+.#{$animation}-enter-active,
+.#{$animation}-leave-active {
+  transition: all getCssVar(transition-duration);
+}
+
+.#{$animation}-enter-from,
+.#{$animation}-leave-to {
+  opacity: 0;
+}

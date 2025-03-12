@@ -1,0 +1,225 @@
+@use "sass:map";
+
+@use "map" as *;
+@use "mixins" as *;
+
+$name: button;
+
+// 定义button
+$button: () !default;
+$button: map.merge(
+  (
+    "text-color": getCssVar("text-color", "regular"),
+    "border-color": getCssVar("border-color", "dark"),
+    "font-size": getCssVar("font-size", "base"),
+    "border-radius": getCssVar("border-radius", "base"),
+    "bg-color": getCssVar("bg-color"),
+    "padding": getCssVar("padding", "base"),
+    "hover-bg-color": getCssVar("color-primary", "light-9"),
+    "hover-text-color": getCssVar("color", "white"),
+    "active-bg-color": getCssVar("button", "hover-bg-color"),
+  ),
+  $button
+);
+
+@each $type in $types {
+  $button: map.merge(
+    (
+      "bg-color-" + (#{$type}): map.get($colors, $type, "base"),
+      "text-color-" + (#{$type}): map.get($colors, $type, "text"),
+      "birder-color-" + (#{$type}): map.get($colors, $type, "base")
+    ),
+    $button
+  );
+}
+
+@include b($name) {
+  @include set-component-css-var($name, $button);
+}
+
+@include b(button) {
+  @include center();
+
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+  border: getCssVar("border");
+  padding: getCssVar($name, "padding");
+  border-color: getCssVar($name, "border-color");
+  border-radius: getCssVar($name, "border-radius");
+  color: getCssVar($name, "text-color");
+  font-size: getCssVar($name, "font-size");
+  background-color: getCssVar($name, "bg-color");
+
+  &:hover {
+    color: getCssVar($name, "hover", "text-color");
+    border-color: getCssVar($name, "hover", "border-color");
+    background-color: getCssVar($name, "hover", "bg-color");
+  }
+
+  &:active {
+    // color: getCssVar("button", "active", "text-color");
+    border-color: getCssVar("button", "active", "bg-color");
+    background-color: getCssVar("button", "active", "bg-color");
+  }
+
+  @include when(plain) {
+    @include set-css-var-value(
+      ("button", "hover", "text-color"),
+      getCssVar("color", "primary")
+    );
+
+    @include set-css-var-value(
+      ("button", "hover", "bg-color"),
+      getCssVar("fill-color", "blank")
+    );
+  }
+
+  @include when(round) {
+    @include set-css-var-value(
+      ("button", "border-radius"),
+      getCssVar("border-radius", "round")
+    );
+  }
+
+  @include when(circle) {
+    @include set-css-var-value(
+      ("button", "border-radius"),
+      getCssVar("border-radius", "circle")
+    );
+  }
+
+  @include when(disabled) {
+    &,
+    &:hover {
+      cursor: not-allowed;
+      background-image: none;
+      color: getCssVar("color", "primary", "light-5");
+      background-color: getCssVar("color", "white");
+      border-color: getCssVar("color", "primary", "light-5");
+    }
+  }
+
+  @include when(loading) {
+    position: relative;
+    pointer-events: none;
+
+    &:before {
+      z-index: 1;
+      pointer-events: none;
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: inherit;
+      background-color: getCssVar("mask-color", "extra-light");
+    }
+  }
+
+  // handler type
+  @each $type in $types {
+    @include m($type) {
+      @include set-css-var-value(
+        getCssName($name, "bg-color"),
+        getCssVar("button-bg-color", $type)
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "text-color"),
+        getCssVar("button-text-color", $type)
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "hover-bg-color"),
+        getCssVar("color", $type, "light-3")
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "active-bg-color"),
+        getCssVar("color", $type, "dark-2")
+      );
+
+      &.is-plain,
+      &.is-text,
+      &.is-link {
+        @include set-css-var-value(
+          getCssName($name, "bg-color"),
+          getCssVar("color", $type, "light-9")
+        );
+        @include set-css-var-value(
+          getCssName($name, "text-color"),
+          getCssVar("color", $type)
+        );
+
+        @include set-css-var-value(
+          getCssName($name, "border-color"),
+          getCssVar("color", $type, "light-5")
+        );
+
+        @include set-css-var-value(
+          getCssName($name, "hover", "text-color"),
+          getCssVar("color", "white")
+        );
+
+        @include set-css-var-value(
+          getCssName($name, "hover", "bg-color"),
+          getCssVar("color", $type, "light-3")
+        );
+
+        &.is-disabled {
+          &,
+          &:hover,
+          &:focus,
+          &:active {
+            color: getCssVar("color", $type, "light-5");
+            background-color: getCssVar("color", $type, "light-9");
+            border-color: getCssVar("color", $type, "light-8");
+          }
+        }
+      }
+
+      &.is-disabled {
+        &,
+        &:hover {
+          cursor: not-allowed;
+          background-image: none;
+          color: getCssVar("color", "white");
+          background-color: getCssVar("color", $type, "light-5");
+          border-color: getCssVar("color", $type, "light-5");
+        }
+      }
+    }
+  }
+
+  // handler size
+  @each $size in (large, small) {
+    @include m($size) {
+      @include set-css-var-value(
+        getCssName($name, "font-size"),
+        getCssVar("font-size", $size)
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "border-color"),
+        getCssVar("button-border-color", $size)
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "border-radius"),
+        getCssVar("border-radius", $size)
+      );
+
+      @include set-css-var-value(
+        getCssName($name, "padding"),
+        getCssVar("padding", $size)
+      );
+    }
+  }
+}
+
+.#{$namespace}-loading-fade-enter-from,
+.#{$namespace}-loading-fade-leave-to {
+  opacity: 0;
+}

@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import "../style/css"
 import { useNameSpace } from '@yx-ui/hooks';
-import { computed, VNode, ref, CSSProperties, watchEffect, useSlots, h, createVNode, isVNode, VNodeArrayChildren, Fragment } from 'vue';
+import { computed, VNode, ref, CSSProperties, watchEffect, useSlots, h, createVNode, isVNode, VNodeArrayChildren, Fragment, Comment } from 'vue';
 
 defineOptions({
     name: 'ss-space'

@@ -15,6 +15,8 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@floating-ui/vue": "^1.1.6",
+    "@tanstack/vue-table": "^8.21.2",
+    "@tanstack/vue-virtual": "^3.13.4",
     "@vueuse/core": "^12.7.0",
     "@yx-ui/hooks": "workspace:^",
     "@yx-ui/theme": "workspace:^",

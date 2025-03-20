@@ -19,11 +19,29 @@
 
     <button @click="validate">validate</button>
     <button @click="reset">reset</button>
+
+    <SSTable :data="data">
+        <SSTableColumn type="index"></SSTableColumn>
+        <SSTableColumn prop="id" label="ID"></SSTableColumn>
+        <SSTableColumn prop="lastName" label="LastName"></SSTableColumn>
+        <SSTableColumn prop="age" label="Age" sortable></SSTableColumn>
+        <SSTableColumn prop="visits" label="Visits"></SSTableColumn>
+        <SSTableColumn prop="status" label="status"></SSTableColumn>
+        <SSTableColumn prop="progress" label="progress"></SSTableColumn>
+        <SSTableColumn prop="createdAt" label="createdAt">
+            <template v-slot:default="{ row, column }">
+                <span>{{ row[column.id] }}</span>
+            </template>
+        </SSTableColumn>
+    </SSTable>
+
+
 </template>
 
 <script setup lang="ts">
-import { SSButton, SSForm, SSFormItem, SSInput, SSSpace, SSSelect, SSSelectOption } from '@yx-ui/components'
+import { SSButton, SSForm, SSFormItem, SSInput, SSSpace, SSSelect, SSSelectOption, SSTable, SSTableColumn } from '@yx-ui/components'
 import { reactive, ref } from 'vue';
+import { makeData } from './makeData'
 
 const position = ref('left')
 
@@ -45,4 +63,6 @@ const validate = () => {
 const reset = () => {
     formRef.value.resetFields()
 }
+
+const data = ref(makeData(10))
 </script>

@@ -48,6 +48,9 @@ export * from "./icon";
 export * from "./select";
 import { SSSelect } from "./select";
 
+export * from "./table";
+import { SSTable } from "./table";
+
 export default (app: App) => {
   app.use(SSButton);
   app.use(SSRow);
@@ -63,4 +66,5 @@ export default (app: App) => {
   app.use(SSInput);
   app.use(SSInput);
   app.use(SSSelect);
+  app.use(SSTable);
 };

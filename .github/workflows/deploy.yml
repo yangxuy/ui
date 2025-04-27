@@ -1,33 +1,33 @@
-name: Deploy VitePress to GitHub Pages
+name: Deploy Docs
 
 on:
   push:
     branches:
-      - main # 监听 main 分支推送
-
-permissions:
-  contents: write
+      - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
 
-      - name: Install pnpm
-        run: npm install -g pnpm # 安装 pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: "8.0.0"
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build VitePress site
+      - name: Build docs
+        working-directory: docs
         run: pnpm run docs:build
 
       - name: Deploy to GitHub Pages

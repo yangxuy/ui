@@ -5,7 +5,7 @@ import {
 } from "@vitepress-demo-preview/plugin";
 
 export default defineConfig({
-  base: "ui",
+  base: "/ui/",
   title: "天涯的博客",
   description: "一个Vue3 UI组件库",
   themeConfig: {

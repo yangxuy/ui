@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install pnpm
+        run: npm install -g pnpm # 安装 pnpm
+
       - name: Install dependencies
         run: pnpm install
 

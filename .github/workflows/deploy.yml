@@ -31,4 +31,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: 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
-          publish_dir: ./docs/.vitepress/dist
+          publish_dir: docs/.vitepress/dist

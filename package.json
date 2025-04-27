@@ -13,7 +13,8 @@
   "license": "ISC",
   "workspaces": [
     "packages/*",
-    "docs"
+    "docs",
+    "example"
   ],
   "dependencies": {
     "@yx-ui/components": "workspace:^",

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
    "example":"pnpm run -C example dev",
-   "docs":"pnpm run -C docs docs:dev"
+   "docs":"pnpm run -C docs docs:dev",
+   "docs:build":"pnpm run -C docs docs:build"
   },
   "keywords": [],
   "author": "",

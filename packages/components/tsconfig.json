@@ -21,6 +21,6 @@
       "noFallthroughCasesInSwitch": true,
       "types": ["vite/client"]
     },
-    "include": ["*.ts", "**/*.ts", "**/*.tsx", "**/*.vue","../../vite-env.d.ts"],
+    "include": ["*.ts", "**/*.ts", "**/*.tsx", "**/*.vue","../../vite-env.d.ts", "../../example/src/utils.ts"],
   }
   

@@ -36,6 +36,13 @@ export default defineConfig({
           ],
         },
         {
+          text: "数据展示",
+          items: [
+            { text: "table表格", link: "/components/table" },
+            { text: "List虚拟列表", link: "/components/list" },
+          ],
+        },
+        {
           text: "Form表单",
           items: [
             { text: "form表单", link: "/components/form" },

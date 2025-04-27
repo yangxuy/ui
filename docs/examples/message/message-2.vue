@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { SSRow, SSCol, SSMessage } from '@yx-ui/components'
+import { SSMessage } from '@yx-ui/components'
 
 const open = (type) => {
     SSMessage[type]({

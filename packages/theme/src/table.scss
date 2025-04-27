@@ -1,0 +1,123 @@
+@use "map" as *;
+@use "mixins" as *;
+$name: table;
+
+@include b($name) {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  width: 100%;
+  overflow: auto;
+
+  @include m(box) {
+    table-layout: fixed;
+    border-collapse: separate;
+  }
+
+  @include m(head) {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 11;
+  }
+
+  @include m(head-th) {
+    box-sizing: border-box;
+    border-bottom: getCssVar("border");
+    height: 40px;
+    line-height: 40px;
+    color: getCssVar("text-color-placeholder");
+    background-color: #fff;
+  }
+
+  @include m(body-td) {
+    box-sizing: border-box;
+    border-bottom: getCssVar("border");
+    height: 40px;
+    color: getCssVar("text-color-primary");
+  }
+
+  @include m(head-cell) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: left;
+  }
+
+  @include m(body-cell) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: left;
+  }
+
+  .ss-table-fixed-right,
+  .ss-table-fixed-left {
+    position: sticky;
+    left: 0;
+    background-color: #fff;
+  }
+
+  .ss-table-sort-icon {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    height: 14px;
+    width: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    overflow: initial;
+
+    .sort-icon {
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      left: 7px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent;
+      border-image: initial;
+    }
+
+    .asc {
+      top: -5px;
+      border-bottom-color: #ccc;
+    }
+
+    .asc-active {
+      border-bottom-color: getCssVar("color-primary");
+    }
+
+    .des {
+      bottom: -3px;
+      border-top-color: #ccc;
+    }
+
+    .des-active {
+      border-top-color: getCssVar("color-primary");
+    }
+
+    .icon-active {
+      border-top-color: getCssVar("color-primary");
+    }
+  }
+
+  // 默认样式修改
+  table {
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+  }
+
+  colgroup {
+    display: table-column-group;
+    unicode-bidi: isolate;
+  }
+}

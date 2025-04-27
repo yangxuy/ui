@@ -27,10 +27,12 @@ export default defineComponent({
         column: { type: Object as PropType<Column<any, any>>, default: () => { } },
     },
 
-    setup(props) {
+    setup({ render, column }) {
         const tableContext = inject(tableContextKey)
+
+
         return () => {
-            let headRender = props.render
+            let headRender = render
             const children = []
             if (typeof headRender === 'function') {
                 children.push(headRender())
@@ -38,77 +40,36 @@ export default defineComponent({
                 children.push(headRender)
             }
 
-            if (props.column.columnDef.enableSorting) {
+            if (column.columnDef.enableSorting) {
                 children.push(h(sortIcon, {
                     desc: computed(() => {
-                        return tableContext?.table.getState().sorting.find((s) => s.id === props.column.id)?.desc
+                        return tableContext?.table.getState().sorting.find((s) => s.id === column.id)?.desc
                     }),
                     onClick: () => {
-                        tableContext?.table.setSorting((old) => {
-                            const existingSort = old.find((s) => s.id === props.column.id);
-                            if (!existingSort) {
-                                return [{ id: props.column.id, desc: false }]; // 升序
-                            } else if (!existingSort.desc) {
-                                return [{ id: props.column.id, desc: true }]; // 降序
-                            } else {
-                                return []; // 取消排序
-                            }
-                        });
+                        column.toggleSorting()
                     }
                 }))
             }
 
-            return h('div', children);
+            if (column.id === 'selection') {
+                children.push(h('input', {
+                    type: 'checkbox',
+                    checked: tableContext?.table.getIsAllRowsSelected(),
+                    indeterminate: tableContext?.table.getIsSomeRowsSelected(),
+                    onChange: () => {
+                        tableContext?.table.toggleAllRowsSelected()
+                    }
+                }))
+            }
+
+            return h('div', { class: 'ss-table--head-cell' }, children);
         }
     },
 });
 </script>
 
 <style lang="scss">
-.ss-table-sort-icon {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    height: 14px;
-    width: 24px;
-    vertical-align: middle;
-    cursor: pointer;
-    position: relative;
-    overflow: initial;
-
-    .sort-icon {
-        width: 0px;
-        height: 0px;
-        position: absolute;
-        left: 7px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent;
-        border-image: initial;
-    }
-
-    .asc {
-        top: -5px;
-        border-bottom-color: #ccc;
-    }
-
-
-    .asc-active {
-        border-bottom-color: red;
-    }
-
-    .des {
-        bottom: -3px;
-        border-top-color: #ccc
-    }
-
-    .des-active {
-        border-top-color: red
-    }
-
-    .icon-active {
-        border-top-color: red;
-    }
-
+input[type="checkbox"] {
+    accent-color: #007bff;
 }
 </style>

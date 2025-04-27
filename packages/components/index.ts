@@ -51,6 +51,12 @@ import { SSSelect } from "./select";
 export * from "./table";
 import { SSTable } from "./table";
 
+export * from "./list";
+import { SSList } from "./list";
+
+export * from "./collapse";
+import { SSCollapse } from "./collapse";
+
 export default (app: App) => {
   app.use(SSButton);
   app.use(SSRow);
@@ -67,4 +73,6 @@ export default (app: App) => {
   app.use(SSInput);
   app.use(SSSelect);
   app.use(SSTable);
+  app.use(SSList);
+  app.use(SSCollapse);
 };

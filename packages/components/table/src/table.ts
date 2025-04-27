@@ -3,6 +3,8 @@ import { InjectionKey, MaybeRef, ToRefs } from "vue";
 
 export interface ITableProps {
   data: MaybeRef<any>;
+  height?: number;
+  maxHeight?: number;
 }
 
 export interface TableColumnProps {
@@ -13,8 +15,14 @@ export interface TableColumnProps {
   property?: string;
   prop?: string;
   sortable?: boolean;
-  width?: string | number;
-  minWidth?: string | number;
+  width?: number;
+  minWidth: number;
+  maxWidth?: number;
+  realWidth: number;
+  fixed?: string | boolean;
+  fixedWidth?: number;
+  selectable?: () => boolean;
+  sortingFn?: (a: any, b: any) => number;
 }
 
 export interface TableColumnHeaderProps {
@@ -33,8 +41,7 @@ export interface TableColumnSlots {
   default?: () => any;
 }
 
-export type TableColumnInjectProps = ToRefs<TableColumnProps> &
-  TableColumnSlots;
+export type TableColumnInjectProps = TableColumnProps & TableColumnSlots;
 
 export interface TableContextProps {
   table: Table<any>;

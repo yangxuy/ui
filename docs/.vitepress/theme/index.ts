@@ -1,4 +1,5 @@
 import DefaultTheme from "vitepress/theme";
+import "./style.scss";
 
 import { AntDesignContainer } from "@vitepress-demo-preview/component";
 import "@vitepress-demo-preview/component/dist/style.css";

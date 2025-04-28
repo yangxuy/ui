@@ -1,0 +1,1 @@
+import{_ as a,c as s,o as n,az as t}from"./chunks/framework.OZ1ZFp1f.js";const m=JSON.parse('{"title":"安装","description":"","frontmatter":{},"headers":[],"relativePath":"guide/nav.md","filePath":"guide/nav.md"}'),i={name:"guide/nav.md"};function r(o,e,d,l,p,c){return n(),s("div",null,e[0]||(e[0]=[t("",2)]))}const u=a(i,[["render",r]]);export{m as __pageData,u as default};
